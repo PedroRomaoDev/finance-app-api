@@ -1,4 +1,4 @@
-import { GetUserByIdUseCase } from '../use-cases/get-use-by-id.js';
+import { GetUserByIdUseCase } from '../use-cases/get-user-by-id.js';
 import { badRequest, ok, serverError } from './helpers.js';
 import validator from 'validator';
 
