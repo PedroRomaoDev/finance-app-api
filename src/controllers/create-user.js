@@ -21,8 +21,8 @@ export class CreateUserController {
                 }
             }
 
-            const passwordIsValid = params.password.length < 6;
-            if (passwordIsValid) {
+            const passwordIsNotValid = params.password.length < 6;
+            if (passwordIsNotValid) {
                 return badRequest({
                     message: 'Password must be at least 6 characters',
                 });
@@ -30,7 +30,7 @@ export class CreateUserController {
             const emailIsValid = validator.isEmail(params.email);
             if (emailIsValid) {
                 return badRequest({
-                    message: 'Invalid e-mail. Please prvide a valid one',
+                    message: 'Invalid e-mail. Please provide a valid one',
                 });
             }
 
