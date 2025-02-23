@@ -1,5 +1,5 @@
-import { badRequest } from './http.js';
 import validator from 'validator';
+import { badRequest } from './http.js';
 
 export const invalidPasswordResponse = () =>
     badRequest({
@@ -8,16 +8,22 @@ export const invalidPasswordResponse = () =>
 
 export const emailIsAlreadyInUseResponse = () =>
     badRequest({
-        message: 'Invalid email. Please provide a valid one',
+        message: 'Invalid e-mail. Please provide a valid one.',
     });
 
 export const invalidIdResponse = () =>
     badRequest({
-        message: 'Some provided field is not allowed.',
+        message: 'The provided id is not valid.',
     });
 
 export const checkIfPasswordIsValid = (password) => password.length >= 6;
 
-export const checkIfEmailIsValid = (email) => validator.isEmail(email);
+// export const checkIfEmailIsValid = (email) => validator.isEmail(email)
+export const checkIfEmailIsValid = (email) => {
+    console.log('📩 Verificando email:', email, '| Tipo:', typeof email);
+
+    // Se o email for undefined ou null, define como string vazia
+    return validator.isEmail(String(email || '').trim());
+};
 
 export const checkIfIdIsValid = (id) => validator.isUUID(id);
