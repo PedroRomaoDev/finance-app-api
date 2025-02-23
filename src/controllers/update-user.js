@@ -49,11 +49,11 @@ export class UpdateUserController {
             }
 
             if (params.email) {
-                console.log('🧐 Verificando email:', params.email);
-                const emailIsValid = checkIfEmailIsValid();
+                console.log('🧐 Verificando email:', params.email); // ADICIONEI PRA TESTAR
+                const emailIsValid = checkIfEmailIsValid(params.email);
 
                 if (!emailIsValid) {
-                    return emailIsAlreadyInUseResponse(params.email);
+                    return emailIsAlreadyInUseResponse();
                 }
             }
 
