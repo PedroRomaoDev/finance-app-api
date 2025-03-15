@@ -3,10 +3,12 @@ import {
     checkIfIdIsValid,
     invalidIdResponse,
     requiredFieldIsMissingResponse,
-} from '../helpers/validation.js';
-import { serverError, userNotFoundResponse, ok } from '../index.js';
+    serverError,
+    userNotFoundResponse,
+    ok,
+} from '../helpers/index.js';
 
-export class GetTransactionsByUserId {
+export class GetTransactionsByUserIdController {
     constructor(getTransactionsByUserIdUseCase) {
         this.getTransactionsByUserIdUseCase = getTransactionsByUserIdUseCase;
     }
