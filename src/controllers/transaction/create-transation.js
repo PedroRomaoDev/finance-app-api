@@ -1,5 +1,5 @@
-import { serverError, badRequest, created } from '../helpers/http.js';
-import { checkIfIdIsValid, invalidIdResponse } from '../helpers/user.js';
+import { serverError, badRequest, created } from '../helpers/index.js';
+import { checkIfIdIsValid, invalidIdResponse } from '../helpers/index.js';
 import validator from 'validator';
 
 export class CreateTransactionController {

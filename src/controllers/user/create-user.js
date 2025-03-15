@@ -1,4 +1,4 @@
-import { badRequest, created, serverError } from '../helpers/http.js';
+import { badRequest, created, serverError } from '../helpers/index.js';
 import { EmailAlreadyInUseError } from '../../errors/user.js';
 import {
     checkIfEmailIsValid,
