@@ -6,17 +6,17 @@ export class PostgresUpdateTransactionRepository {
         const updateValues = [];
 
         Object.keys(updateTransactionParams).forEach((key) => {
-            updateFields.push(`${key} = $${updateFields.length + 1}`);
+            updateFields.push(`${key} = $${updateValues.length + 1}`);
             updateValues.push(updateTransactionParams[key]);
         });
 
         updateValues.push(transactionId);
 
         const updateQuery = `
-        UPDATE transactions
-        SET ${updateFields.join(', ')}
-        WHERE id = $${updateValues.length}
-        RETURNING *
+            UPDATE transactions
+            SET ${updateFields.join(', ')} 
+            WHERE id = $${updateValues.length}
+            RETURNING *
         `;
 
         const updatedUser = await PostgresHelper.query(
