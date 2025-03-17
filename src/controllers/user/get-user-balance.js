@@ -1,6 +1,11 @@
-import { serverError } from '../helpers.js';
-import { UserNotFoundError, userNotFoundResponse } from '../errors.js';
-import { checkIfIdIsValid, invalidIdResponse, ok } from '../helpers/index.js';
+import { serverError } from '../helpers/index.js';
+import { UserNotFoundError } from '../../errors/user.js';
+import {
+    checkIfIdIsValid,
+    invalidIdResponse,
+    ok,
+    userNotFoundResponse,
+} from '../helpers/index.js';
 
 export class GetUserBalanceController {
     constructor(getUserBalanceUseCase) {

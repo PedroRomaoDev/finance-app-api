@@ -5,6 +5,7 @@ import {
     makeCreateUserController,
     makeUpdateUserController,
     makeDeleteUserController,
+    makeGetUserBalanceController,
 } from './src/factories/controllers/user.js';
 import {
     makeGetTransactionsByUserIdController,
@@ -70,6 +71,13 @@ app.patch('/api/transactions/:transactionId', async (request, response) => {
     const { statusCode, body } =
         await updateTransationController.execute(request);
 
+    response.status(statusCode).send(body);
+});
+
+app.get('/api/users/:userId/balance', async (request, response) => {
+    const getUserBalanceController = makeGetUserBalanceController();
+    const { statusCode, body } =
+        await getUserBalanceController.execute(request);
     response.status(statusCode).send(body);
 });
 
