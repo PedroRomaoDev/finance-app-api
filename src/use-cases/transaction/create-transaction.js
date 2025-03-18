@@ -12,6 +12,8 @@ export class CreateTransactionUseCase {
         // validar se o usuario existe
         const userId = createTransactionParams.user_id;
 
+        console.log('Buscando usuário com ID:', userId);
+
         const user = await this.getUserByIdRepository.execute(userId);
 
         if (!user) {
