@@ -1,17 +1,6 @@
-import {
-    serverError,
-    created,
-    validateRequiredFields,
-} from '../helpers/index.js';
-import {
-    checkIfIdIsValid,
-    invalidIdResponse,
-    requiredFieldIsMissingResponse,
-    checkIfAmountIsValid,
-    invalidAmountResponse,
-    checkIfTypeIsValid,
-    invalidTypeResponse,
-} from '../helpers/index.js';
+import { serverError, created, badRequest } from '../helpers/index.js';
+import { createTransactionSchema } from '../../schemas/index.js';
+import { ZodError } from 'zod';
 
 export class CreateTransactionController {
     constructor(createTransactionUseCase) {
@@ -21,51 +10,18 @@ export class CreateTransactionController {
         try {
             const params = httpRequest.body;
 
-            // verificar campos obrigatorios
-            const requiredFields = [
-                'user_id',
-                'name',
-                'date',
-                'amount',
-                'type',
-            ];
+            await createTransactionSchema.parseAsync(params);
 
-            const { ok: requiredFieldsWereProvided, missingField } =
-                validateRequiredFields(params, requiredFields);
-
-            if (!requiredFieldsWereProvided) {
-                return requiredFieldIsMissingResponse(missingField);
-            }
-
-            //verificar se o userId é válido
-            const userIdIsValid = checkIfIdIsValid(params.user_id);
-
-            if (!userIdIsValid) {
-                return invalidIdResponse();
-            }
-
-            const amountIsValid = checkIfAmountIsValid(params.amount);
-
-            if (!amountIsValid) {
-                return invalidAmountResponse();
-            }
-
-            // verificar se o type é valido
-            const type = params.type.trim().toUpperCase(); //tira os espaços e coloca tudo inserido em maiusculo
-
-            const typeIsValid = checkIfTypeIsValid(type);
-
-            if (!typeIsValid) {
-                return invalidTypeResponse();
-            }
-
-            const transaction = await this.createTransactionUseCase.execute({
-                ...params,
-                type,
-            });
+            const transaction =
+                await this.createTransactionUseCase.execute(params);
 
             return created(transaction);
         } catch (error) {
+            if (error instanceof ZodError) {
+                return badRequest({
+                    message: error.errors[0].message,
+                });
+            }
             console.error(error);
             return serverError(); //retorna um erro 500
         }
