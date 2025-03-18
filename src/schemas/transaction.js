@@ -24,7 +24,7 @@ export const createTransactionSchema = z.object({
         .datetime({
             message: 'Date must be a valid date.',
         }),
-    type: z.enum(['EXPENSE', 'EARING', 'INVESTMENT'], {
+    type: z.enum(['EXPENSE', 'EARNING', 'INVESTMENT'], {
         errorMap: () => ({
             message: 'Type must be a EXPENSE, EARNING or INVESTMENT',
         }),
