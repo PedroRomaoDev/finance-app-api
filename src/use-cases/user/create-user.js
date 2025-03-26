@@ -8,7 +8,7 @@ export class CreateUserUseCase {
         this.createUserRepository = createUserRepository;
     }
     async execute(createUserParams) {
-        //verificar se o email já está em uso(ainda nao consigo fazer
+        //verificar se o email já está em uso
 
         const userWithProviderEmail =
             await this.getUserByEmailRepository.execute(createUserParams.email);
