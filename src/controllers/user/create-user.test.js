@@ -101,6 +101,7 @@ describe('Create User Controller', () => {
             body: {
                 first_name: 'Pedro',
                 last_name: 'Romao',
+                email: 'pe',
                 password: '123456789',
             },
         };
