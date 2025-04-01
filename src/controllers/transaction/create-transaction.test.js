@@ -191,7 +191,7 @@ describe('CreateTransactionController', () => {
         const result = await sut.execute({
             body: {
                 ...baseHttpRequest.body,
-                amount: 'invalid_amount',
+                amount: 'amount_invalid',
             },
         });
 
