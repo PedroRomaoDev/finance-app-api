@@ -46,7 +46,7 @@ describe('CreateTransactionController', () => {
         // act
         const result = await sut.execute({
             body: {
-                ...baseHttpRequest,
+                ...baseHttpRequest.body,
                 type: 'EARNING',
             },
         });
@@ -62,7 +62,7 @@ describe('CreateTransactionController', () => {
         // act
         const result = await sut.execute({
             body: {
-                ...baseHttpRequest,
+                ...baseHttpRequest.body,
                 type: 'INVESTMENT',
             },
         });
@@ -176,6 +176,22 @@ describe('CreateTransactionController', () => {
             body: {
                 ...baseHttpRequest.body,
                 type: 'invalid_type',
+            },
+        });
+
+        // assert
+        expect(result.statusCode).toBe(400);
+    });
+
+    it('should return 400 when amount is not a valid currency', async () => {
+        // arrange
+        const { sut } = makeSut();
+
+        // act
+        const result = await sut.execute({
+            body: {
+                ...baseHttpRequest.body,
+                amount: 'invalid_amount',
             },
         });
 
