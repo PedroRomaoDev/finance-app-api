@@ -4,8 +4,8 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "test": "jest",
-        "test:watch": "jest --watch --passWithNoTests",
+        "test": "jest --passWithNoTests --silent",
+        "test:watch": "jest --watch --passWithNoTests --silent",
         "postinstall": "npx husky install && npx prisma generate",
         "start:dev": "node --watch index.js"
     },
