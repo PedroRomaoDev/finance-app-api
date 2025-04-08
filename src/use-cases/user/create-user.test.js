@@ -15,7 +15,7 @@ describe('CreateUserUseCase', () => {
         }
     }
 
-    class HasherAdapterStub {
+    class passwordHasherAdapterStub {
         async execute() {
             return 'hashed_password';
         }
@@ -39,13 +39,13 @@ describe('CreateUserUseCase', () => {
     const makeSut = () => {
         const getUserByEmailRepository = new GetUserByEmailRepositoryStub();
         const createUserRepository = new CreateUserRepositoryStub();
-        const hasherAdapter = new HasherAdapterStub();
+        const passwordHasherAdapter = new passwordHasherAdapterStub();
         const idGeneratorAdapter = new IdGeneratorAdapterStub();
 
         const sut = new CreateUserUseCase(
             getUserByEmailRepository,
             createUserRepository,
-            hasherAdapter,
+            passwordHasherAdapter,
             idGeneratorAdapter,
         );
 
@@ -53,7 +53,7 @@ describe('CreateUserUseCase', () => {
             sut,
             getUserByEmailRepository,
             createUserRepository,
-            hasherAdapter,
+            passwordHasherAdapter,
             idGeneratorAdapter,
         };
     };
@@ -90,5 +90,27 @@ describe('CreateUserUseCase', () => {
         await expect(promise).rejects.toThrow(
             new EmailAlreadyInUseError(user.email),
         );
+    });
+
+    it('should call IdGeneratorAdapter to generate a random id', async () => {
+        // arrange
+        const { sut, idGeneratorAdapter, createUserRepository } = makeSut();
+
+        const idGeneratorSpy = jest.spyOn(idGeneratorAdapter, 'execute');
+        const createUserRepositorySpy = jest.spyOn(
+            createUserRepository,
+            'execute',
+        );
+
+        // act
+        await sut.execute(user);
+
+        // assert
+        expect(idGeneratorSpy).toHaveBeenCalled();
+        expect(createUserRepositorySpy).toHaveBeenCalledWith({
+            ...user,
+            password: 'hashed_password',
+            id: 'generated_id',
+        });
     });
 });
