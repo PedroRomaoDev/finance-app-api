@@ -74,7 +74,7 @@ describe('GetTransactionsByUserIdUseCase', () => {
         await expect(promise).rejects.toThrow(new UserNotFoundError(id));
     });
 
-    it('should call GetUserByIdRepository if correct params', async () => {
+    it('should call GetUserByIdRepository with correct params', async () => {
         // arrange
         const { sut, getUserByIdRepository } = makeSut();
         const getUserByIdRepositorySpy = jest.spyOn(
@@ -90,7 +90,7 @@ describe('GetTransactionsByUserIdUseCase', () => {
         expect(getUserByIdRepositorySpy).toHaveBeenCalledWith(id);
     });
 
-    it('should call GetTransactionsByUserIdRepository if correct params', async () => {
+    it('should call GetTransactionsByUserIdRepository with correct params', async () => {
         // arrange
         const { sut, getTransactionsByUserIdRepository } = makeSut();
         const getTransactionsByUserIdRepositorySpy = jest.spyOn(
@@ -104,5 +104,20 @@ describe('GetTransactionsByUserIdUseCase', () => {
 
         // assert
         expect(getTransactionsByUserIdRepositorySpy).toHaveBeenCalledWith(id);
+    });
+
+    it('should call throw if GetUserByIdRepository throws', async () => {
+        // arrange
+        const { sut, getUserByIdRepository } = makeSut();
+        jest.spyOn(getUserByIdRepository, 'execute').mockRejectedValueOnce(
+            new Error(),
+        );
+        const id = faker.string.uuid();
+
+        // act
+        const promise = sut.execute(id);
+
+        // assert
+        await expect(promise).rejects.toThrow();
     });
 });
