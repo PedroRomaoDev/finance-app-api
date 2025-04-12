@@ -8,3 +8,10 @@ export const user = {
         length: 7,
     }),
 };
+
+export const userBalance = {
+    earnings: faker.finance.amount(),
+    expenses: faker.finance.amount(),
+    invesments: faker.finance.amount(),
+    balance: faker.finance.amount(),
+};
