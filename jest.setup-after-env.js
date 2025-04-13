@@ -1,7 +1,6 @@
-import { prisma } from './prisma/prisma.js';
+import { prisma } from './prisma/prisma';
 
 beforeEach(async () => {
-    // console.log('Cleaning up database...');
     await prisma.user.deleteMany({});
     await prisma.transaction.deleteMany({});
 });
