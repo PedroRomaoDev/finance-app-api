@@ -2,7 +2,7 @@ import { PostgresCreateUserRepository } from './create-user.js';
 import { user } from '../../../tests/index.js';
 import { prisma } from '../../../../prisma/prisma.js';
 
-describe('CreateUserRepository', () => {
+describe('PostgresCreateUserRepository', () => {
     it('should create a user on db', async () => {
         // arrange
         const sut = new PostgresCreateUserRepository();
