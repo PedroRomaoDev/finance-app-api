@@ -58,8 +58,6 @@ describe('PostgresGetUserBalanceRepository', () => {
 
         const result = await sut.execute(user.id);
 
-        console.log(result.earnings);
-
         expect(result.earnings.toString()).toBe('10000');
         expect(result.expenses.toString()).toBe('2000');
         expect(result.investments.toString()).toBe('6000');
