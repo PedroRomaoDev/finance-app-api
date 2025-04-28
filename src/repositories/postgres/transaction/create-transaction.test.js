@@ -1,11 +1,11 @@
 import { PostgresCreateTransactionRepository } from './create-transaction';
-import { transaction, user as fakeUser } from '../../../tests';
+import { transaction, user } from '../../../tests';
 import { prisma } from '../../../../prisma/prisma';
 import dayjs from 'dayjs';
 
 describe('PostgresCreateTransactionRepository', () => {
     it('should create a transaction on db', async () => {
-        const user = await prisma.user.create({ data: fakeUser });
+        await prisma.user.create({ data: user });
         const sut = new PostgresCreateTransactionRepository();
 
         const result = await sut.execute({ ...transaction, user_id: user.id });
