@@ -3,7 +3,7 @@ import { prisma } from '../../../../prisma/prisma';
 import { user, transaction } from '../../../tests';
 import { PostgresGetTransactionByUserIdRepository } from './get-transactions-by-user-id';
 
-describe('PostgresGetTransactionsByUserIdRepository', () => {
+describe('PostgresGetTransactionByUserIdRepository', () => {
     it('should get transactions by user id on db', async () => {
         const sut = new PostgresGetTransactionByUserIdRepository();
         await prisma.user.create({ data: user });
@@ -27,5 +27,18 @@ describe('PostgresGetTransactionsByUserIdRepository', () => {
         expect(dayjs(result[0].date).year()).toBe(
             dayjs(transaction.date).year(),
         );
+    });
+
+    it('should call Prisma with correct params', async () => {
+        const sut = new PostgresGetTransactionByUserIdRepository();
+        const prismaSpy = jest.spyOn(prisma.transaction, 'findMany');
+
+        await sut.execute(user.id);
+
+        expect(prismaSpy).toHaveBeenCalledWith({
+            where: {
+                user_id: user.id,
+            },
+        });
     });
 });
