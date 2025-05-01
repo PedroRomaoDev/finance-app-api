@@ -1,9 +1,9 @@
+import { TransactionNotFoundError } from '../../errors';
+import { transaction } from '../../tests';
+import { DeleteTransactionController } from './delete-transaction';
 import { faker } from '@faker-js/faker';
-import { DeleteTransactionController } from './delete-transaction.js';
-import { transaction } from '../../tests/index.js';
-import { TransactionNotFoundError } from '../../errors/transaction.js';
 
-describe('DeleteTransactionController', () => {
+describe('Delete Transaction Controller', () => {
     class DeleteTransactionUseCaseStub {
         async execute() {
             return transaction;
@@ -16,18 +16,17 @@ describe('DeleteTransactionController', () => {
 
         return { sut, deleteTransactionUseCase };
     };
-
-    it('should return 200 when deleting a transaction succesfully', async () => {
+    it('should return 200 when deleting a transaction successfully', async () => {
         // arrange
         const { sut } = makeSut();
 
         // act
-        const result = await sut.execute({
+        const response = await sut.execute({
             params: { transactionId: faker.string.uuid() },
         });
 
         // assert
-        expect(result.statusCode).toBe(200);
+        expect(response.statusCode).toBe(200);
     });
 
     it('should return 400 when id is invalid', async () => {
@@ -35,12 +34,12 @@ describe('DeleteTransactionController', () => {
         const { sut } = makeSut();
 
         // act
-        const result = await sut.execute({
+        const response = await sut.execute({
             params: { transactionId: 'invalid_id' },
         });
 
         // assert
-        expect(result.statusCode).toBe(400);
+        expect(response.statusCode).toBe(400);
     });
 
     it('should return 404 when transaction is not found', async () => {
@@ -48,15 +47,15 @@ describe('DeleteTransactionController', () => {
         const { sut, deleteTransactionUseCase } = makeSut();
         jest.spyOn(deleteTransactionUseCase, 'execute').mockRejectedValueOnce(
             new TransactionNotFoundError(),
-        ); //resolvedValue porque nao queremos que ele lance uma exceção, pq cairia no catch e o status code seria 500
+        );
 
         // act
-        const result = await sut.execute({
+        const response = await sut.execute({
             params: { transactionId: faker.string.uuid() },
         });
 
         // assert
-        expect(result.statusCode).toBe(404);
+        expect(response.statusCode).toBe(404);
     });
 
     it('should return 500 when DeleteTransactionUseCase throws', async () => {
@@ -67,14 +66,13 @@ describe('DeleteTransactionController', () => {
         );
 
         // act
-        const result = await sut.execute({
+        const response = await sut.execute({
             params: { transactionId: faker.string.uuid() },
         });
 
         // assert
-        expect(result.statusCode).toBe(500);
+        expect(response.statusCode).toBe(500);
     });
-
     it('should call DeleteTransactionUseCase with correct params', async () => {
         // arrange
         const { sut, deleteTransactionUseCase } = makeSut();
