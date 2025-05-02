@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker';
 import { UpdateTransactionController } from './update-transaction.js';
 import { transaction } from '../../tests/index.js';
+import { TransactionNotFoundError } from '../../errors/transaction.js';
 
 describe('UpdateTransactionController', () => {
     class updateTransactionUseCaseStub {
@@ -132,5 +133,19 @@ describe('UpdateTransactionController', () => {
             baseHttpRequest.params.transactionId,
             baseHttpRequest.body,
         );
+    });
+
+    it('should return 404 when TransactionNotFoundError is thrown', async () => {
+        // arrange
+        const { sut, updateTransactionUseCase } = makeSut();
+        jest.spyOn(updateTransactionUseCase, 'execute').mockRejectedValueOnce(
+            new TransactionNotFoundError(),
+        );
+
+        // act
+        const result = await sut.execute(baseHttpRequest);
+
+        // assert
+        expect(result.statusCode).toBe(404);
     });
 });
