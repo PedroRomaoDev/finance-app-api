@@ -8,7 +8,9 @@
         "test:watch": "dotenv -e .env.test jest -- --watch --silent --passWithNoTests --runInBand -forceExit --detectOpenHandles",
         "test:coverage": "dotenv -e .env.test jest -- --coverage --silent --runInBand -forceExit --detectOpenHandles --all ",
         "postinstall": "husky install && prisma generate",
-        "start:dev": "node --watch index.js"
+        "start:dev": "node --watch index.js",
+        "eslint:check": "eslint src/ ",
+        "prettier:check": "prettier --check src/"
     },
     "author": "",
     "license": "ISC",
