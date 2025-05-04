@@ -4,7 +4,7 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "test": "dotenv -e .env.test jest -- --silent --passWithNoTests --runInBand --forceExit --detectOpenHandles",
+        "test": "dotenv -e .env.test -- jest --passWithNoTests --silent --runInBand --detectOpenHandles --forceExit",
         "test:watch": "dotenv -e .env.test jest -- --watch --silent --passWithNoTests --runInBand -forceExit --detectOpenHandles",
         "test:coverage": "dotenv -e .env.test jest -- --coverage --silent --runInBand -forceExit --detectOpenHandles --all ",
         "postinstall": "husky install && prisma generate",
@@ -17,12 +17,13 @@
     "description": "",
     "devDependencies": {
         "@babel/core": "^7.26.10",
-        "@babel/preset-env": "^7.26.9",
+        "@babel/preset-env": "^7.27.1",
         "@eslint/js": "^9.19.0",
         "@faker-js/faker": "^9.6.0",
         "@types/jest": "^29.5.14",
         "@types/node": "^22.13.4",
         "babel-jest": "^29.7.0",
+        "babel-plugin-transform-import-meta": "^2.3.2",
         "eslint": "^8.57.1",
         "globals": "^15.14.0",
         "husky": "^8.0.3",
