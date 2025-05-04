@@ -1,35 +1,37 @@
 name: Deploy
 
-on: 
+on:
     push:
-        branches: 
+        branches:
             - master
 
 jobs:
-    check: 
+    check:
         runs-on: ubuntu-latest
 
         steps:
-          - name: Checkout code
-            uses: actions/checkout@v2
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-          - name: Use Node.js
-            uses: actions/setup-node@v2
-            with:
-                node-version: "20"
+            - name: Use Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '20'
 
-          - name: Install dependencies
-            run: npm install
+            - name: Install dependencies
+              run: npm install
 
-          - name: ESlint
-            run: npm run eslint:check
+            - name: Install Docker Compose
+              run: |
+                  sudo curl -L "https://github.com/docker/compose/releases/download/v2.23.3/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                  sudo chmod +x /usr/local/bin/docker-compose
+                  docker-compose --version
 
-          - name: Prettier
-            run: npm run prettier:check
+            - name: ESlint
+              run: npm run eslint:check
 
-          - name: Test
-            run: npm run test
+            - name: Prettier
+              run: npm run prettier:check
 
-
-
-
+            - name: Test
+              run: npm run test
