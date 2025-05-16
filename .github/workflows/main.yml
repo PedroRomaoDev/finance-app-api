@@ -17,11 +17,12 @@ jobs:
               uses: actions/setup-node@v2
               with:
                   node-version: '20'
+
             - name: Create .env.test file
               run: echo "DATABASE_URL=postgresql://root:pedro2012@localhost:5433/finance-app" >> .env.test
 
             - name: Install dependencies
-              run: npm install
+              run: npm ci --include=dev
 
             - name: Install Docker Compose
               run: |
@@ -52,7 +53,7 @@ jobs:
             node-version: '20'
 
         - name: Install Dependencies
-          run: npm install
+          run: npm ci --include=dev
         
         - name: Create .env file from secret
           run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
