@@ -1,0 +1,254 @@
+{
+	"info": {
+		"_postman_id": "e957dbf9-ea30-4adf-95b1-2c8bac4cb378",
+		"name": "Finance-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39728158",
+		"_collection_link": "https://fintrack-7184.postman.co/workspace/Fintrack-Workspace~7765a370-50d9-45bc-a807-f8e55fb2ca56/collection/39728158-e957dbf9-ea30-4adf-95b1-2c8bac4cb378?action=share&source=collection_link&creator=39728158"
+	},
+	"item": [
+		{
+			"name": "Transaction",
+			"item": [
+				{
+					"name": "Create Transaction",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"PICAAAAA\",\r\n    \"user_id\": \"04899dde-9e3c-47cb-9a9c-930e1442f461\",\r\n    \"date\": \"2020-01-01T00:00:00Z\",\r\n    \"amount\": 3213.91,\r\n    \"type\": \"EARNING\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/transactions",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"transactions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Transaction By User Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/transactions?userId=04899dde-9e3c-47cb-9a9c-930e1442f461",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"transactions"
+							],
+							"query": [
+								{
+									"key": "userId",
+									"value": "04899dde-9e3c-47cb-9a9c-930e1442f461"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Transaction",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"novo nome\"\r\n\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/transactions/86e755ec-780a-4a36-8175-3721c221fb8f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"transactions",
+								"86e755ec-780a-4a36-8175-3721c221fb8f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Transaction",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/transactions/86e755ec-780a-4a36-8175-3721c221fb8f",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"transactions",
+								"86e755ec-780a-4a36-8175-3721c221fb8f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"picaaaaaaaa\",\r\n    \"last_name\": \"pedrooooooo\",\r\n    \"email\": \"pe3333ca@gmail.com\",\r\n    \"password\": \"1333333\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						},
+						"description": "Este endpoint permite a criação de um novo usuário no sistema. O usuário precisa fornecer um e-mail válido, uma senha e seu primeiro e último nome.\n\n### **Notas**\n\n- O campo `email` deve ser único no sistema.\n    \n- A senha deve ter no mínimo **6 caracteres**.\n    \n- Caso algum campo obrigatório não seja enviado ou tenha formato inválido, o sistema retornará um erro `400`.\n    \n- Se o e-mail já estiver cadastrado, a resposta será um erro `409`.\n    \n\n### **Método:** `POST`\n\n### **URL:** `/api/users`\n\n### **Corpo da Requisição (****`JSON`****)**\n\n### **Parâmetros do Corpo:**\n\n| Campo | Tipo | Obrigatório | Descrição |\n| --- | --- | --- | --- |\n| `first_name` | `string` | Não | Primeiro nome do usuário |\n| `last_name` | `string` | Não | Sobrenome do usuário |\n| `email` | `string` | ✅ Sim | E-mail único e válido do usuário |\n| `password` | `string` | ✅ Sim | Senha com pelo menos 6 caracteres |"
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/951662f5-ae31-4e6a-abea-7c1497a32715",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"951662f5-ae31-4e6a-abea-7c1497a32715"
+							]
+						},
+						"description": "Este endpoint permite recuperar as informações de um usuário específico com base no seu ID.\n\n### **Método:** `GET`\n\n### **URL:** `/api/users/{userId}`\n\n### **Parâmetros da URL:**\n\n| Parâmetro | Tipo | Obrigatório | Descrição |\n| --- | --- | --- | --- |\n| `userId` | `string (UUID)` | ✅ Sim | ID único do usuário a ser consultado |\n\n### **Respostas**\n\n#### ✅ **200 OK** – Usuário encontrado\n\n🚫 **404 Not Found** – Usuário não encontrado  \n🚫 **500 Internal Server Error** – Erro inesperado\n\n🚫 **400 Bad Request** – ID inválido\n\n### **Notas**\n\n- O `userId` deve ser um UUID válido.\n    \n- Se o usuário não existir no banco de dados, o sistema retornará um erro `404`.\n    \n- Caso o ID seja inválido (não seja um UUID), a resposta será um erro `400`."
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"first_name\": \"papitoo\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/951662f5-ae31-4e6a-abea-7c1497a32715",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"951662f5-ae31-4e6a-abea-7c1497a32715"
+							]
+						},
+						"description": "Este endpoint permite atualizar as informações de um usuário existente com base no seu ID. Apenas campos permitidos podem ser modificados.\n\n### **Método:** `PATCH`\n\n### **URL:** `/api/users/{userId}`\n\n### **Parâmetros da URL:**\n\n| Parâmetro | Tipo | Obrigatório | Descrição |\n| --- | --- | --- | --- |\n| `userId` | `string (UUID)` | ✅ Sim | ID único do usuário a ser atualizado |\n\n### **Corpo da Requisição (JSON):**\n\nO corpo da requisição deve conter os campos a serem atualizados.\n\n| Campo | Tipo | Obrigatório | Descrição |\n| --- | --- | --- | --- |\n| `first_name` | `string` | ❌ Não | Primeiro nome do usuário |\n| `last_name` | `string` | ❌ Não | Sobrenome do usuário |\n| `email` | `string` | ❌ Não | Novo e-mail do usuário (deve ser válido e não estar em uso) |\n| `password` | `string` | ❌ Não | Nova senha do usuário (mínimo 6 caracteres) |\n\n### **Exemplo de Requisição:**\n\n``` bash\nPATCH /api/users/123e4567-e89b-12d3-a456-426614174000\n\n ```\n\n### **Respostas**\n\n#### **✅ 200 OK – Usuário atualizado com sucesso**\n\n**🚫 500 Internal Server Error – Erro inesperado**\n\n#### **🚫 400 Bad Request – Erro de validação**\n\n- **Campos inválidos ou não permitidos**\n    \n- **E-mail inválido**\n    \n- **E-mail já em uso**\n    \n- **Senha curta**\n    \n- **ID inválido**\n    \n\n**🚫 404 Not Found – Usuário não encontrado**\n\n**🚫 500 Internal Server Error – Erro inesperado**\n\n### **Notas**\n\n- O `userId` deve ser um UUID válido.\n    \n- Se o usuário não existir no banco de dados, o sistema retornará um erro `404`.\n    \n- Apenas os campos `first_name`, `last_name`, `email` e `password` podem ser atualizados.\n    \n- O e-mail deve ser único e válido. Caso o novo e-mail já esteja em uso, a atualização será rejeitada.\n    \n- Senhas devem ter no mínimo 6 caracteres e serão armazenadas de forma criptografada."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/596109ac-a99d-4f36-b1ac-ec61fe7a012b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"596109ac-a99d-4f36-b1ac-ec61fe7a012b"
+							]
+						},
+						"description": "Este endpoint permite atualizar as informações de um usuário existente com base no seu ID. Apenas campos permitidos podem ser modificados.\n\n### **Método:** `PATCH`\n\n### **URL:** `/api/users/{userId}`\n\n### **Parâmetros da URL:**\n\n| Parâmetro | Tipo | Obrigatório | Descrição |\n| --- | --- | --- | --- |\n| `userId` | `string (UUID)` | ✅ Sim | ID único do usuário a ser atualizado |\n\n### **Corpo da Requisição (JSON):**\n\nO corpo da requisição deve conter os campos a serem atualizados.\n\n| Campo | Tipo | Obrigatório | Descrição |\n| --- | --- | --- | --- |\n| `first_name` | `string` | ❌ Não | Primeiro nome do usuário |\n| `last_name` | `string` | ❌ Não | Sobrenome do usuário |\n| `email` | `string` | ❌ Não | Novo e-mail do usuário (deve ser válido e não estar em uso) |\n| `password` | `string` | ❌ Não | Nova senha do usuário (mínimo 6 caracteres) |\n\n### **Exemplo de Requisição:**\n\n``` bash\nPATCH /api/users/123e4567-e89b-12d3-a456-426614174000\n\n ```\n\n### **Respostas**\n\n#### **✅ 200 OK – Usuário atualizado com sucesso**\n\n**🚫 500 Internal Server Error – Erro inesperado**\n\n#### **🚫 400 Bad Request – Erro de validação**\n\n- **Campos inválidos ou não permitidos**\n    \n- **E-mail inválido**\n    \n- **E-mail já em uso**\n    \n- **Senha curta**\n    \n- **ID inválido**\n    \n\n**🚫 404 Not Found – Usuário não encontrado**\n\n**🚫 500 Internal Server Error – Erro inesperado**\n\n### **Notas**\n\n- O `userId` deve ser um UUID válido.\n    \n- Se o usuário não existir no banco de dados, o sistema retornará um erro `404`.\n    \n- Apenas os campos `first_name`, `last_name`, `email` e `password` podem ser atualizados.\n    \n- O e-mail deve ser único e válido. Caso o novo e-mail já esteja em uso, a atualização será rejeitada.\n    \n- Senhas devem ter no mínimo 6 caracteres e serão armazenadas de forma criptografada."
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Balance",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users/951662f5-ae31-4e6a-abea-7c1497a32715/balance",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"951662f5-ae31-4e6a-abea-7c1497a32715",
+								"balance"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
