@@ -15,19 +15,31 @@ describe('LoginUserUseCase', () => {
         }
     }
 
+    class TokensGeneratorAdapterStub {
+        execute() {
+            return {
+                accessToken: 'any_access_token',
+                refreshToken: 'any_refresh_token',
+            };
+        }
+    }
+
     const makeSut = () => {
         const getUserByEmailRepositoryStub = new GetUserByEmailRepositoryStub();
         const passwordComparatorAdapterStub =
             new PasswordComparatorAdapterStub();
+        const tokensGeneratorAdapterStub = new TokensGeneratorAdapterStub();
         const sut = new LoginUserUseCase(
             getUserByEmailRepositoryStub,
             passwordComparatorAdapterStub,
+            tokensGeneratorAdapterStub,
         );
 
         return {
             sut,
             getUserByEmailRepositoryStub,
             passwordComparatorAdapterStub,
+            tokensGeneratorAdapterStub,
         };
     };
 
@@ -59,5 +71,16 @@ describe('LoginUserUseCase', () => {
 
         //assert
         expect(promise).rejects.toThrow(new InvalidPasswordError());
+    });
+
+    it('should return user with tokens', async () => {
+        //arrange
+        const { sut } = makeSut();
+
+        //act
+        const result = await sut.execute('any_email', 'any_password');
+
+        //assert
+        expect(result.tokens.accessToken).toBeDefined();
     });
 });
