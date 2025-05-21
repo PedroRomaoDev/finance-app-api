@@ -11,3 +11,9 @@ export class UserNotFoundError extends Error {
         this.name = 'UserNotFoundError';
     }
 }
+export class InvalidPasswordError extends Error {
+    constructor(userId) {
+        super(`Invalid password for user with id ${userId}.`);
+        this.name = 'InvalidPasswordError';
+    }
+}
