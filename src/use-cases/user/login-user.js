@@ -1,10 +1,11 @@
-import { UserNotFoundError } from '../../errors/user.js';
+import { InvalidPasswordError, UserNotFoundError } from '../../errors/user.js';
 
 export class LoginUserUseCase {
-    constructor(getUserByEmailRepository) {
+    constructor(getUserByEmailRepository, passwordComparatorAdapter) {
         this.getUserByEmailRepository = getUserByEmailRepository;
+        this.passwordComparatorAdapter = passwordComparatorAdapter;
     }
-    async execute(email) {
+    async execute(email, password) {
         // verificaremos se o e-mail é válido (se há usuário com esse e-mail)
         const user = await this.getUserByEmailRepository.execute(email);
         if (!user) {
@@ -12,6 +13,13 @@ export class LoginUserUseCase {
         }
 
         // verificaremos se a senha recebida é válida (se a senha está correta)
+        const isPasswordValid = await this.passwordComparatorAdapter.execute(
+            password,
+            user.password,
+        );
+        if (!isPasswordValid) {
+            throw new InvalidPasswordError();
+        }
 
         // depois, gerar os tokens
     }
