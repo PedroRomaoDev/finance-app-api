@@ -19,3 +19,5 @@ const swaggerDocument = JSON.parse(
 );
 
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+console.log('pedrooookkkkkkkto aquii');
