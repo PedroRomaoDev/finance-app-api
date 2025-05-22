@@ -24,3 +24,10 @@ export const notFound = (body) => ({
     statusCode: 404,
     body,
 });
+
+export const unauthorized = () => ({
+    statusCode: 401,
+    body: {
+        message: 'Unauthorized',
+    },
+});
