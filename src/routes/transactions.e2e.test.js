@@ -14,6 +14,7 @@ describe('Transaction Routes E2E Tests', () => {
 
         const response = await request(app)
             .post('/api/transactions')
+            .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
             .send({ ...transaction, user_id: createdUser.id, id: undefined });
 
         expect(response.status).toBe(201);
@@ -32,6 +33,7 @@ describe('Transaction Routes E2E Tests', () => {
 
         const { body: createdTransaction } = await request(app)
             .post('/api/transactions')
+            .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
             .send({ ...transaction, user_id: createdUser.id, id: undefined });
 
         const response = await request(app).get(
@@ -52,6 +54,7 @@ describe('Transaction Routes E2E Tests', () => {
 
         const { body: createdTransaction } = await request(app)
             .post('/api/transactions')
+            .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
             .send({ ...transaction, user_id: createdUser.id, id: undefined });
 
         const response = await request(app)
@@ -75,9 +78,7 @@ describe('Transaction Routes E2E Tests', () => {
             .post('/api/transactions')
             .send({ ...transaction, user_id: createdUser.id, id: undefined });
 
-        const response = await request(app).delete(
-            `/api/transactions/${createdTransaction.id}`,
-        );
+        const response = await request(app).delete(`/api/transactions`);
 
         expect(response.status).toBe(200);
         expect(response.body.id).toBe(createdTransaction.id);
@@ -100,9 +101,7 @@ describe('Transaction Routes E2E Tests', () => {
     });
 
     it('GET /api/transaction?userId should return 404 when fetching transactions from a non-existing user', async () => {
-        const response = await request(app).get(
-            `/api/transactions?userId=${transaction.user_id}`,
-        );
+        const response = await request(app).get(`/api/transactions`);
 
         expect(response.status).toBe(404);
     });

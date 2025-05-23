@@ -1,21 +1,28 @@
 import { faker } from '@faker-js/faker';
-import { UpdateTransactionUseCase } from './update-transaction.js';
-import { transaction } from '../../tests/index.js';
+import { UpdateTransactionUseCase } from './update-transaction';
+import { transaction } from '../../tests';
 
 describe('UpdateTransactionUseCase', () => {
     class UpdateTransactionRepositoryStub {
-        async execute(transactionId) {
-            return {
-                ...transaction,
-                id: transactionId,
-            };
+        async execute() {
+            return transaction;
+        }
+    }
+
+    class GetTransactionByIdStub {
+        async execute() {
+            return transaction;
         }
     }
 
     const makeSut = () => {
         const updateTransactionRepository =
             new UpdateTransactionRepositoryStub();
-        const sut = new UpdateTransactionUseCase(updateTransactionRepository);
+        const getTransactionById = new GetTransactionByIdStub();
+        const sut = new UpdateTransactionUseCase(
+            updateTransactionRepository,
+            getTransactionById,
+        );
 
         return {
             sut,
@@ -23,7 +30,7 @@ describe('UpdateTransactionUseCase', () => {
         };
     };
 
-    it('should update transaction successfully', async () => {
+    it('should create a transaction successfully', async () => {
         // arrange
         const { sut } = makeSut();
 
@@ -33,10 +40,7 @@ describe('UpdateTransactionUseCase', () => {
         });
 
         // assert
-        expect(result).toEqual({
-            id: transaction.id,
-            ...transaction,
-        });
+        expect(result).toEqual(transaction);
     });
 
     it('should call UpdateTransactionRepository with correct params', async () => {
