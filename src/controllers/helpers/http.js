@@ -31,3 +31,10 @@ export const unauthorized = () => ({
         message: 'Unauthorized',
     },
 });
+
+export const forbidden = () => ({
+    statusCode: 403,
+    body: {
+        message: 'Forbidden',
+    },
+});
