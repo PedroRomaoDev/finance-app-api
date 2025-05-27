@@ -9,7 +9,8 @@ export class UpdateTransactionUseCase {
     async execute(transactionId, params) {
         const transaction =
             await this.getTransactionByIdRepository.execute(transactionId);
-        if (params?.userId && transaction.user_id !== params.user_id) {
+        // console.log(transaction.user_id !== params.user_id)
+        if (params?.user_id && transaction.user_id !== params.user_id) {
             throw new ForbiddenError();
         }
         return await this.updateTransactionRepository.execute(
