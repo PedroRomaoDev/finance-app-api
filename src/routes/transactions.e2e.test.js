@@ -91,17 +91,17 @@ describe('Transaction Routes E2E Tests', () => {
     it('PATCH /api/transactions/:transactionId should return 404 when updating a non-existing transaction', async () => {
         const { body: createdUser } = await request(app)
             .post('/api/users')
-            .send({
-                ...user,
-                id: undefined,
-            });
+            .send({ ...user, id: undefined });
+
+        const fakeId = 'b5fd9e13-aaaa-bbbb-cccc-123456789abc'; // UUID que não existe
 
         const response = await request(app)
-            .patch(`/api/transactions/${transaction.id}`)
+            .patch(`/api/transactions/${fakeId}`)
             .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`)
             .send({ amount: 100, type: TransactionType.INVESTMENT });
 
         expect(response.status).toBe(404);
+        expect(response.body.message).toBe('Transaction not found.'); // se quiser validar a mensagem
     });
 
     it('DELETE /api/transactions/:transactionId should return 404 when deleting a non-existing transaction', async () => {
