@@ -26,7 +26,11 @@ export class GetTransactionsByUserIdController {
 
             //chamar o useCase
             const transactions =
-                await this.getTransactionsByUserIdUseCase.execute(userId);
+                await this.getTransactionsByUserIdUseCase.execute(
+                    userId,
+                    from,
+                    to,
+                );
 
             //retornar resposta http
             return ok(transactions);
