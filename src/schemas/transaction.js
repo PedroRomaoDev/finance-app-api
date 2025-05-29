@@ -55,3 +55,25 @@ export const updateTransactionSchema = createTransactionSchema
         user_id: true,
     })
     .partial();
+
+export const getTransactionsByUserIdSchema = z.object({
+    user_id: z
+        .string({
+            required_error: 'User ID is required.',
+        })
+        .uuid({
+            message: 'User ID must be a valid UUID',
+        }),
+    from: z
+        .string()
+        .date({
+            message: 'From date must be a valid date.',
+        })
+        .optional(),
+    to: z
+        .string()
+        .date({
+            message: 'To date must be a valid date.',
+        })
+        .optional(),
+});
