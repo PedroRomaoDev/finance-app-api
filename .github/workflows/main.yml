@@ -19,7 +19,10 @@ jobs:
                   node-version: '20'
 
             - name: Create .env.test file
-              run: echo "DATABASE_URL=postgresql://root:pedro2012@localhost:5433/finance-app" >> .env.test
+              run: |
+                  echo "DATABASE_URL=postgresql://root:pedro2012@localhost:5433/finance-app" >> .env.test
+                  echo "JWT_ACCESS_TOKEN_SECRET=secret" >> .env.test
+                  echo "JWT_REFRESH_TOKEN_SECRET=secret2" >> .env.test
 
             - name: Install dependencies
               run: npm ci --include=dev
@@ -40,36 +43,37 @@ jobs:
               run: npm run test
 
     migrate:
-      runs-on: ubuntu-latest
-      needs: check
-      environment: production
-      steps:
-        - name: Checkout code
-          uses: actions/checkout@v2
+        runs-on: ubuntu-latest
+        needs: check
+        environment: production
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-        - name: Use Node.js
-          uses: actions/setup-node@v2
-          with:
-            node-version: '20'
+            - name: Use Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '20'
 
-        - name: Install Dependencies
-          run: npm ci --include=dev
-        
-        - name: Create .env file from secret
-          run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+            - name: Install Dependencies
+              run: npm ci --include=dev
 
-        - name: Run Migrations
-          run: npx prisma migrate deploy
+            - name: Create .env file from secret
+              run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" > .env
+                  echo "JWT_ACCESS_TOKEN_SECRET=${{ secrets.JWT_ACCESS_TOKEN_SECRET }}" >> .env
+                  echo "JWT_REFRESH_TOKEN_SECRET=${{ secrets.JWT_REFRESH_TOKEN_SECRET }}" >> .env
+
+            - name: Run Migrations
+              run: npx prisma migrate deploy
 
     deploy:
-      runs-on: ubuntu-latest
-      needs: migrate
-      environment: production
-      steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+        runs-on: ubuntu-latest
+        needs: migrate
+        environment: production
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
 
-      - name: Deploy to production
-        run: |
-          curl "${{ secrets.RENDER_DEPLOY_HOOK_URL }}" 
-        
+            - name: Deploy to production
+              run: |
+                  curl "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
