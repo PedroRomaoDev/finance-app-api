@@ -1,4 +1,7 @@
-import { ForbiddenError } from '../../errors/index.js';
+import {
+    ForbiddenError,
+    TransactionNotFoundError,
+} from '../../errors/index.js';
 
 export class UpdateTransactionUseCase {
     constructor(updateTransactionRepository, getTransactionByIdRepository) {
@@ -9,6 +12,10 @@ export class UpdateTransactionUseCase {
     async execute(transactionId, params) {
         const transaction =
             await this.getTransactionByIdRepository.execute(transactionId);
+
+        if (!transaction) {
+            throw new TransactionNotFoundError(); // <- isso resolve seu problema
+        }
         // console.log(transaction.user_id !== params.user_id)
         if (params?.user_id && transaction.user_id !== params.user_id) {
             throw new ForbiddenError();
