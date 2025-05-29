@@ -4,6 +4,8 @@ import { transaction, user } from '../tests/index.js';
 import { TransactionType } from '@prisma/client';
 
 describe('Transaction Routes E2E Tests', () => {
+    const from = '2024-02-01';
+    const to = '2024-02-28';
     it('POST /api/transactions should return 201 when creating a transaction successfully', async () => {
         const { body: createdUser } = await request(app)
             .post('/api/users')
@@ -37,7 +39,7 @@ describe('Transaction Routes E2E Tests', () => {
             .send({ ...transaction, user_id: createdUser.id, id: undefined });
 
         const response = await request(app)
-            .get(`/api/transactions`)
+            .get(`/api/transactions?from=${from}&to=${to}`)
             .set('Authorization', `Bearer ${createdUser.tokens.accessToken}`);
 
         expect(response.status).toBe(200);

@@ -4,6 +4,8 @@ import { UserNotFoundError } from '../../errors/user';
 import { transaction } from '../../tests/index.js';
 
 describe('GetTransactionsByUserIdController', () => {
+    const from = '2024-02-01';
+    const to = '2024-02-28';
     class GetTransactionsByUserIdUseCaseStub {
         async execute() {
             return transaction;
@@ -26,7 +28,7 @@ describe('GetTransactionsByUserIdController', () => {
 
         // act
         const result = await sut.execute({
-            query: { userId: faker.string.uuid() },
+            query: { userId: faker.string.uuid(), from, to },
         });
 
         // assert
@@ -39,20 +41,20 @@ describe('GetTransactionsByUserIdController', () => {
 
         // act
         const result = await sut.execute({
-            query: { userId: undefined },
+            query: { userId: undefined, from, to },
         });
 
         // assert
         expect(result.statusCode).toBe(400);
     });
 
-    it('should return 400 when userId param is invalid', async () => {
+    it('should return 400 when userId param is missing', async () => {
         // arrange
         const { sut } = makeSut();
 
         // act
         const result = await sut.execute({
-            query: { userId: 'invalid_user_id' },
+            query: { userId: 'invalid_user_id', from, to },
         });
 
         // assert
@@ -69,7 +71,7 @@ describe('GetTransactionsByUserIdController', () => {
 
         // act
         const result = await sut.execute({
-            query: { userId: faker.string.uuid() },
+            query: { userId: faker.string.uuid(), from, to },
         });
 
         // assert
@@ -86,7 +88,7 @@ describe('GetTransactionsByUserIdController', () => {
 
         // act
         const result = await sut.execute({
-            query: { userId: faker.string.uuid() },
+            query: { userId: faker.string.uuid(), from, to },
         });
 
         // assert
@@ -107,6 +109,8 @@ describe('GetTransactionsByUserIdController', () => {
         await sut.execute({
             query: {
                 userId: userId,
+                from,
+                to,
             },
         });
 
