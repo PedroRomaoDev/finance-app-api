@@ -38,7 +38,7 @@ describe('RefreshTokenUseCase', () => {
             refreshToken: 'any_refresh_token',
         });
     });
-    it('should throw if tokenVerifierAdapter throws', () => {
+    it('should throw UnautorizedError if tokenVerifierAdapter throws', () => {
         const { sut, tokenVerifierAdapter } = makeSut();
         jest.spyOn(tokenVerifierAdapter, 'execute').mockImplementationOnce(
             () => {
