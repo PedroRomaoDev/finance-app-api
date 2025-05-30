@@ -20,6 +20,10 @@ describe('GetUserBalance', () => {
         params: {
             userId: faker.string.uuid(),
         },
+        query: {
+            from: '2024-01-01',
+            to: '2024-12-31',
+        },
     };
 
     it('should return 200 when getting user balance', async () => {
@@ -38,7 +42,13 @@ describe('GetUserBalance', () => {
         const { sut } = makeSut();
 
         // act
-        const result = await sut.execute({ params: { userId: 'invalid_id' } });
+        const result = await sut.execute({
+            params: { userId: 'invalid_id' },
+            query: {
+                from: '2024-01-01',
+                to: '2024-12-31',
+            },
+        });
 
         // assert
         expect(result.statusCode).toBe(400);
@@ -64,10 +74,18 @@ describe('GetUserBalance', () => {
         const executeSpy = jest.spyOn(getUserBalanceUseCase, 'execute');
 
         // act
-        await sut.execute(httpRequest);
+        await sut.execute(
+            httpRequest,
+            httpRequest.query.from,
+            httpRequest.query.to,
+        );
 
         // assert
-        expect(executeSpy).toHaveBeenCalledWith(httpRequest.params.userId);
+        expect(executeSpy).toHaveBeenCalledWith(
+            httpRequest.params.userId,
+            httpRequest.query.from,
+            httpRequest.query.to,
+        );
     });
 
     it('should return 404 if GetUserBalanceUseCase throws UserNotFoundError', async () => {
