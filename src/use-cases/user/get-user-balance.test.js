@@ -4,6 +4,8 @@ import { UserNotFoundError } from '../../errors/user';
 import { userBalance, user } from '../../tests/index.js';
 
 describe('GetUserBalanceUseCase', () => {
+    const from = '2024-01-01';
+    const to = '2024-12-31';
     class getUserBalanceRepositoryStub {
         async execute() {
             return userBalance;
@@ -30,7 +32,7 @@ describe('GetUserBalanceUseCase', () => {
         const { sut } = makeSut();
 
         // act
-        const result = await sut.execute(faker.string.uuid());
+        const result = await sut.execute(faker.string.uuid(), from, to);
 
         // assert
         expect(result).toEqual(userBalance);
@@ -43,7 +45,7 @@ describe('GetUserBalanceUseCase', () => {
         const userId = faker.string.uuid();
 
         // act
-        const promise = sut.execute(userId);
+        const promise = sut.execute(userId, from, to);
 
         // assert
         await expect(promise).rejects.toThrow(new UserNotFoundError(userId));
@@ -59,7 +61,7 @@ describe('GetUserBalanceUseCase', () => {
         const userId = faker.string.uuid();
 
         // act
-        await sut.execute(userId);
+        await sut.execute(userId, from, to);
 
         // assert
         expect(getUserBydRepositorySpy).toHaveBeenCalledWith(userId);
@@ -75,10 +77,14 @@ describe('GetUserBalanceUseCase', () => {
         const userId = faker.string.uuid();
 
         // act
-        await sut.execute(userId);
+        await sut.execute(userId, from, to);
 
         // assert
-        expect(getUserBalanceRepositorySpy).toHaveBeenCalledWith(userId);
+        expect(getUserBalanceRepositorySpy).toHaveBeenCalledWith(
+            userId,
+            from,
+            to,
+        );
     });
 
     it('should throw if GetUserByIdRepository throws', async () => {
@@ -90,7 +96,7 @@ describe('GetUserBalanceUseCase', () => {
         const userId = faker.string.uuid();
 
         // act
-        const promise = sut.execute(userId);
+        const promise = sut.execute(userId, from, to);
 
         // assert
         await expect(promise).rejects.toThrow();
@@ -105,7 +111,7 @@ describe('GetUserBalanceUseCase', () => {
         const userId = faker.string.uuid();
 
         // act
-        const promise = sut.execute(userId);
+        const promise = sut.execute(userId, from, to);
 
         // assert
         await expect(promise).rejects.toThrow();
