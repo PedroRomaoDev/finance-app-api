@@ -2,7 +2,7 @@
     "swagger": "2.0",
     "info": {
         "title": "Finance App API",
-        "description": "API for Finance App that allows users to manage their finances.",
+        "description": "This is the backend API for the Finance App, built with Node.js, Express, and Prisma ORM, using a PostgreSQL database. It provides RESTful endpoints for user authentication, financial transaction management (CRUD), categorization of income, expenses, and investments, total balance calculation, and percentage-based financial analysis.\n\nFeatures include the calculation of percentage distribution between earnings, expenses, and investments, giving users a clear view of how their money is allocated. The API is structured following clean architecture principles, ensuring maintainability, scalability, and clear separation of concerns.\n\nIt also implements best practices such as data validation, error handling, and JWT-based authentication for secure client-server communication.",
         "version": "1.0.0"
     },
     "securityDefinitions": {
