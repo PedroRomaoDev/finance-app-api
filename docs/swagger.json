@@ -53,7 +53,9 @@
                         }
                     }
                 }
-            },
+            }
+        },
+        "/api/users/me": {
             "get": {
                 "summary": "Get authenticated user",
                 "tags": ["User"],
@@ -230,7 +232,7 @@
                 }
             }
         },
-        "/api/users/balance": {
+        "/api/users/me/balance": {
             "get": {
                 "summary": "Get authenticated user balance",
                 "tags": ["User"],
